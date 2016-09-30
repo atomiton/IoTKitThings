@@ -1,0 +1,32 @@
+<Query>
+  <Find format="version,known">
+    <ServoModel>
+      <servoId ne=""/>
+    </ServoModel>
+  </Find>
+  <if condition="$Response.Message.Value/Find/Status eq 'Success'">
+    <then>
+      <SetResponseData>
+        <key>
+          Message.Value.Find.Result.ServoModel.Angle.Value
+        </key>
+        <value>
+          120
+        </value>
+      </SetResponseData>
+      <Update>
+        <from>
+          Result
+        </from>
+        <Include>
+          $Response.Message.Value.Find
+        </Include>
+      </Update>
+    </then>
+    <else>
+      <DelResponseData key="Message.Value.Find"/>
+      <SetResponseData key="Message.Value.status" value="Failed"/>
+      <SetResponseData key="Message.Value.Message" value="Servo Motor is not initialized"/>
+    </else>
+  </if>
+</Query>

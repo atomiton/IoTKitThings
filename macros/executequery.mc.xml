@@ -1,0 +1,17 @@
+<Macro Name="ExecuteQuery">
+      <Argument>
+        <QueryString>
+          <Query/>
+        </QueryString>
+      </Argument>
+      <Result>
+        <OnRequest Disable="CMD_SERVER">
+          <Target>[:RuntimeParams.FacetIDName:]</Target>
+          <Process>
+            <Message>
+              <Value>[:$Macro.Argument.QueryString:]</Value>
+            </Message>
+          </Process>
+        </OnRequest>
+      </Result>
+    </Macro>

@@ -1,0 +1,82 @@
+<Namespace Name="Atomiton">
+  <Domain Name="Sensor">
+    <ThingModel Name="TempSensorModel" combines="TempSensorFacet">
+      <Sid Name="TempSensorId"/>
+    </ThingModel>
+    <ThingModel Name="HumiditySensorModel" combines="HumiditySensorFacet">
+      <Sid Name="HumSensorId"/>
+    </ThingModel>
+    <ThingModel Name="AmbianceSensorModel" combines="AmbianceSensorFacet">
+      <Sid Name="AmbSensorId"/>
+    </ThingModel>
+    <ThingModel Name="MCUSensorModel" combines="MCUSensorFacet">
+      <Sid name="SensorId"/>
+    </ThingModel>
+    <ThingModel combines="USBCameraFacet" name="USBCameraModel">
+      <Sid name="camId"/>
+    </ThingModel>
+    <ThingModel combines="Servomotorfacet" name="ServoModel">
+      <Sid name="servoId"/>
+    </ThingModel>
+    <ThingModel combines="RGBfacet" name="RGBModel">
+      <Sid name="rgbId"/>
+    </ThingModel>
+    <ThingModel combines="Bluetoothfacet" name="BluetoothModel">
+      <Sid name="blthId"/>
+    </ThingModel>
+    <AppModel name="SerialPortModel" combines="SerialPortFacet">
+      <Sid name="ID"/>
+    </AppModel>
+    
+    <DataModel Name="RandomRGBValues">
+      <String Name="RGB"/>
+    </DataModel>
+
+
+    <Def>
+      <Include>[:RuntimeParams.TypesLocation:]peripheralparams.types.xml</Include>
+    </Def>
+    <AppFacet>
+      <Include>[:RuntimeParams.ThingFacetLocation:]serialportfacet.tf.xml</Include>
+    </AppFacet>
+    <ThingFacet>
+      <Include>[:RuntimeParams.ThingFacetLocation:]mcusensorfacet.tf.xml</Include>
+    </ThingFacet>
+    <ThingFacet>
+      <Include>[:RuntimeParams.ThingFacetLocation:]tempsensorfacet.tf.xml</Include>
+    </ThingFacet>
+    <ThingFacet>
+      <Include>[:RuntimeParams.ThingFacetLocation:]bluetooth.tf.xml</Include>
+    </ThingFacet>
+    <ThingFacet>
+      <Include>[:RuntimeParams.ThingFacetLocation:]humiditysensorfacet.tf.xml</Include>
+    </ThingFacet>
+    <ThingFacet>
+      <Include>[:RuntimeParams.ThingFacetLocation:]ambiancesensorfacet.tf.xml</Include>
+    </ThingFacet>
+    <Def>
+      <Include>[:RuntimeParams.TypesLocation:]imagesize.types.xml</Include>
+    </Def>
+    <Def>
+      <Include>[:RuntimeParams.TypesLocation:]cameraconfig.types.xml</Include>
+    </Def>
+    <Def>
+      <Include>[:RuntimeParams.TypesLocation:]usbcameraparams.types.xml</Include>
+    </Def>
+    <ThingFacet>
+      <Include>[:RuntimeParams.ThingFacetLocation:]usbcamerafacet.tf.xml</Include>
+    </ThingFacet>
+    <ThingFacet>
+      <Include>[:RuntimeParams.ThingFacetLocation:]servomotorfacet.tf.xml</Include>
+    </ThingFacet>
+    <ThingFacet>
+      <Include>[:RuntimeParams.ThingFacetLocation:]rgbfacet.tf.xml</Include>
+    </ThingFacet>
+    <ThingFacet>
+      <Include>[:RuntimeParams.ThingFacetLocation:]perifwritefacet.tf.xml</Include>
+    </ThingFacet>
+    <ThingModel Name="PerifWriteModel" combines="PerifWriteFacet">
+      <Sid Name="PerifWriteId"/>
+    </ThingModel>
+  </Domain>
+</Namespace>

@@ -1,0 +1,143 @@
+<Query>
+  <Find format="version,Known">
+    <SerialPortModel>
+      <ID ne=""/>
+    </SerialPortModel>
+  </Find>
+  <if condition="$Response.Message.Value/Find/Status eq 'Success'">
+    <then>
+      <SetContextData key="PortName">
+        <Value>
+          [:$Response.Message.Value.Find.Result.SerialPortModel.PortName.Known:]
+        </Value>
+      </SetContextData>
+      <SetContextData key="Baudrate">
+        <Value>
+          [:$Response.Message.Value.Find.Result.SerialPortModel.Baudrate:]
+        </Value>
+      </SetContextData>
+      <executeQuery>
+        <QueryString>
+          <Query>
+             <DeleteAll format="version,current">
+    <MCUSensorModel>
+      <sensorId ne="" />
+    </MCUSensorModel>
+  </DeleteAll>
+  
+  <DeleteAll format="version,current">
+    <ServoModel>
+      <servoId ne="" />
+    </ServoModel>
+  </DeleteAll>
+  
+            <Create>
+              <MCUSensorModel>
+                <PerifParams>
+                  <Peripheral>
+                    serial
+                  </Peripheral>
+                  <Interface>
+                    serial
+                  </Interface>
+                  <InterfacePort>
+                    [:$ContextData.PortName:]
+                  </InterfacePort>
+                  <Baudrate>
+                    [:$ContextData.Baudrate:]
+                  </Baudrate>
+                  <Format>
+                    ascii
+                  </Format>
+                  <Operation>
+                    receive
+                  </Operation>
+                  <UniqueId>
+                    76522
+                  </UniqueId>
+                  <Payload>
+                    $Null()
+                  </Payload>
+                </PerifParams>
+                <SensorData>
+                  $Null()
+                </SensorData>
+                <InitSubscribers>
+                  false
+                </InitSubscribers>
+              </MCUSensorModel>
+            </Create>
+            <Create>
+              <RGBModel>
+                <Peripheral>
+                  serial
+                </Peripheral>
+                <Interface>
+                  serial
+                </Interface>
+                <InterfacePort>
+                  [:$ContextData.PortName:]
+                </InterfacePort>
+                <Baudrate>
+                  [:$ContextData.Baudrate:]
+                </Baudrate>
+                <format>
+                  ascii
+                </format>
+                <Operation>
+                  transmit
+                </Operation>
+                <UniqueId>
+                  1779
+                </UniqueId>
+                <RGBString>
+                  RGB-1:111
+                </RGBString>
+                <received>
+                  $Null()
+                </received>
+              </RGBModel>
+            </Create>
+            <Create>
+              <ServoModel>
+                <Peripheral>
+                  serial
+                </Peripheral>
+                <Interface>
+                  serial
+                </Interface>
+                <InterfacePort>
+                  [:$ContextData.PortName:]
+                </InterfacePort>
+                <Baudrate>
+                  [:$ContextData.Baudrate:]
+                </Baudrate>
+                <format>
+                  ascii
+                </format>
+                <Operation>
+                  transmit
+                </Operation>
+                <UniqueId>
+                  123467
+                </UniqueId>
+                <Angle>
+                  40
+                </Angle>
+                <received>
+                  $Null()
+                </received>
+              </ServoModel>
+            </Create>
+          </Query>
+        </QueryString>
+      </executeQuery>
+      <SetResponseData key="Message.Value.Status" value="Success"/>
+      <SetResponseData key="Message.Value.Message" value="IoTKit Models Initialized Successfully"/>
+    </then>
+    <else>
+      <SetResponseData key="Message.Value.Status" value="WARN"/>
+      <SetResponseData key="Message.Value.Message" value="Serial Port not specified or detected"/>
+    </else>
+  </if>
+</Query>

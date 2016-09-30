@@ -1,0 +1,42 @@
+<Query>
+  <Find format="version">
+    <USBCameraModel>
+      <CamId ne=""/>
+    </USBCameraModel>
+  </Find>
+  <if condition="$Response.Message.Value/Find/Status eq 'Success'">
+    <then>
+      <SetResponseData>
+        <key>
+          Message.Value.Find.Result.USBCameraModel.Image.Value
+        </key>
+        <value>
+          $Null()
+        </value>
+      </SetResponseData>
+      <SetResponseData>
+        <key>
+          Message.Value.Find.Result.USBCameraModel.USBCameraParameters.ImageName.Value
+        </key>
+        <value>
+          ucam_mypic.jpeg
+        </value>
+      </SetResponseData>
+      <Update>
+        <from>
+          Result
+        </from>
+        <Include>
+          $Response.Message.Value.Find
+        </Include>
+      </Update>
+      <SetResponseData key="Message.Value.Status" value="Success"/>
+      <SetResponseData key="Message.Value.Message" value="http://1.1.1.1:8080/fid-mypics/ucam_mypic.jpeg"/>
+    </then>
+    <else>
+      <DelResponseData key="Message.Value.Find"/>
+      <SetResponseData key="Message.Value.Status" value="Failed"/>
+      <SetResponseData key="Message.Value.Message" value="Camera is not initialized"/>
+    </else>
+  </if>
+</Query>

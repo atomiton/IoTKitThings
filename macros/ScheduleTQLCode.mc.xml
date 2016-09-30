@@ -1,0 +1,30 @@
+<Macro Name="ScheduleTQLCode">
+  <Argument>
+    <ScheduleInterval>
+    </ScheduleInterval>
+    <StartTime>
+      0
+    </StartTime>
+    <EndTime>
+    </EndTime>
+    <ActionCode>
+    </ActionCode>
+    <ScheduleName>
+    </ScheduleName>
+  </Argument>
+  <Result>
+    <DoRequest target="[:RuntimeParams.SequenceFacetIDName:]">
+      <Process>
+        <Message>
+          <Value>
+            <Execute eid="[:$Macro.Argument.ScheduleName:]" schedule="[[:$Macro.Argument.StartTime:]..[:$Macro.Argument.EndTime:]/[:$Macro.Argument.ScheduleInterval:]]">
+              <Action>
+                [:$Macro.Argument.ActionCode:]
+              </Action>
+            </Execute>
+          </Value>
+        </Message>
+      </Process>
+    </DoRequest>
+  </Result>
+</Macro>

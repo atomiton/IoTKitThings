@@ -1,0 +1,26 @@
+<ThingFacet Name="HumiditySensorFacet">
+      <Double KnownBy="HumidityValueAction" Name="HumidityValue"/>
+      <Action Name="HumidityValueAction">
+        <Workflow Limit="1" Live="1" Timeout="-1">
+          <Task name="Main" while="true">
+            <Event as="ActionArgument" name="Argument"/>
+            <Invoke name="ReadValueFromContext" waitFor="Argument">
+              <FacetScript>
+                <Log Message="Reading HUMPCT value from context [:$ContextData.HUMPCT:]"/>
+                <If Condition="$ContextData/not(boolean(HUMPCT))">
+                  <SetContextData>
+                    <Key>HUMPCT</Key>
+                    <Value>0</Value>
+                  </SetContextData>
+                </If>
+              </FacetScript>
+            </Invoke>
+            <Output As="ActionResult" Name="Result">
+              <Value>
+                <HumidityValue>[:$ContextData.HUMPCT:]</HumidityValue>
+              </Value>
+            </Output>
+          </Task>
+        </Workflow>
+      </Action>
+    </ThingFacet>

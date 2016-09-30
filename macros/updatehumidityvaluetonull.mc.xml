@@ -1,0 +1,24 @@
+<Macro Name="UpdateHumidityValueToNull">
+      <Argument/>
+      <Result>
+        <ExecuteQuery>
+          <QueryString>
+            <Query>
+              <Find format="version">
+                <HumiditySensorModel>
+                  <HumSensorId ne=""/>
+                </HumiditySensorModel>
+              </Find>
+              <SetResponseData>
+                <key>Message.Value.Find.Result.HumiditySensorModel.HumidityValue.Value</key>
+                <value>$Null()</value>
+              </SetResponseData>
+              <Update>
+                <from>Result</from>
+                <Include>$Response.Message.Value.Find</Include>
+              </Update>
+            </Query>
+          </QueryString>
+        </ExecuteQuery>
+      </Result>
+    </Macro>

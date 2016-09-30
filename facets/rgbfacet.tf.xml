@@ -1,0 +1,39 @@
+<ThingFacet Name="RGBfacet">
+	<String Name="Peripheral" />
+	<String name="InterfacePort" />
+	<String name="Baudrate"/>
+	<String Name="Interface" />
+	<String Name="UniqueId" default="19121" />
+	<String Name="format" default="ascii" />
+	<String Name="Operation" />
+	<String KnownBy="serialAction" Name="RGBString" />
+	<AA>[:#o#Output.Argument:]</AA>
+	<Action Documentation="Send RGB Command" Name="serialAction">
+		<Workflow Limit="1" Live="1" Timeout="-1">
+			<Task name="Main">
+				<Output as="ActionArgument" name="Argument" />	
+				<Invoke name="InvokeZbeeServo" post="perif://19121" scope="local"
+					waitFor="Argument">
+					<Message>
+						<Value>
+							<InterfacePort>"[%:[:AA:].InterfacePort.Value:%]"</InterfacePort>
+							<Baudrate>"[%:[:AA:].Baudrate.Value:%]"</Baudrate>
+							<Interface>"[%:[:AA:].Interface.Value:%]"</Interface>
+							<UniqueId>"[%:[:AA:].UniqueId.Value:%]"</UniqueId>
+							<Operation>"[%:[:AA:].Operation.Value:%]"</Operation>
+							<format>"[%:[:AA:].format.Value:%]"</format>
+							<Payload>"[%:[:AA:].RGBString.Value:%]"</Payload>
+							<Peripheral>"[%:[:AA:].Peripheral.Value:%]"</Peripheral>
+						</Value>
+					</Message>
+				</Invoke>
+				<Log Message="***** After Invoke *****" />
+				<Output as="ActionResult" name="Result">
+					<Value>
+						<RGBString>"[%:[:AA:].RGBString.Value:%]"</RGBString>
+					</Value>
+				</Output>
+			</Task>
+		</Workflow>
+	</Action>
+</ThingFacet>

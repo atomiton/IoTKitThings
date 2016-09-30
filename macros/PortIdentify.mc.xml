@@ -1,0 +1,36 @@
+<Macro Name="PortIdentify">
+	<Result>
+		<executeQuery>
+			<QueryString>
+				<Query>
+					<DeleteAll format="version,current">
+						<MCUSensorModel>
+							<sensorId ne="" />
+						</MCUSensorModel>
+					</DeleteAll>
+					<DeleteAll format="version,current">
+						<RGBModel>
+							<rgbId ne="" />
+						</RGBModel>
+					</DeleteAll>
+					<DeleteAll format="version,current">
+						<ServoModel>
+							<servoId ne="" />
+						</ServoModel>
+					</DeleteAll>
+					<DeleteAll format="version,current">
+						<SerialPortModel>
+							<ID ne="" />
+						</SerialPortModel>
+					</DeleteAll>
+					<Create>
+						<SerialPortModel>
+							<PortName>$Null()</PortName>
+							<Baudrate>9600</Baudrate>
+						</SerialPortModel>
+					</Create>
+				</Query>
+			</QueryString>
+		</executeQuery>
+	</Result>
+</Macro>

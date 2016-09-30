@@ -1,0 +1,12 @@
+<Def Name="CameraConfig">
+      <Number Default="0" Name="Channel"/>
+      <Number Default="0" Name="Standard"/>
+      <Number Default="0" Name="Brightness"/>
+      <Number Default="0" Name="Contrast"/>
+      <Number Default="286" Name="Gamma"/>
+      <Number Default="65" Name="Saturation"/>
+      <Number Default="6" Name="Sharpness"/>
+      <Number Default="0" Name="Hue"/>
+      <Number Default="0" Name="Gain"/>
+      <Number Default="80" Name="Quality"/>
+    </Def>

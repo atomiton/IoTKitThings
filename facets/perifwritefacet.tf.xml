@@ -1,0 +1,38 @@
+<ThingFacet Name="PerifWriteFacet">
+	<String Name="Peripheral" />
+	<String name="InterfacePort" />
+	<String name="Baudrate"/>
+	<String Name="Interface" />
+	<String Name="UniqueId" default="19121" />
+	<String Name="format" default="ascii" />
+	<String Name="Operation" />
+	<String KnownBy="serialAction" Name="SerialData" />
+	<AA>[:#o#Output.Argument:]</AA>
+	<Action Documentation="Send SerialData" Name="serialAction">
+		<Workflow Limit="1" Live="1" Timeout="-1">
+			<Task name="Main">
+				<Output as="ActionArgument" name="Argument" />	
+				<Invoke name="InvokeZbeeServo" post="perif://write" scope="local"
+					waitFor="Argument">
+					<Message>
+						<Value>
+							<InterfacePort>"[%:[:AA:].InterfacePort.Value:%]"</InterfacePort>
+							<Baudrate>"[%:[:AA:].Baudrate.Value:%]"</Baudrate>
+							<Interface>"[%:[:AA:].Interface.Value:%]"</Interface>
+							<UniqueId>"[%:[:AA:].UniqueId.Value:%]"</UniqueId>
+							<Operation>"[%:[:AA:].Operation.Value:%]"</Operation>
+							<format>"[%:[:AA:].format.Value:%]"</format>
+							<Payload>"[%:[:AA:].SerialData.Value:%]"</Payload>
+							<Peripheral>"[%:[:AA:].Peripheral.Value:%]"</Peripheral>
+						</Value>
+					</Message>
+				</Invoke>
+				<Output as="ActionResult" name="Result">
+					<Value>
+						<SerialData>"[%:[:AA:].SerialData.Value:%]"</SerialData>
+					</Value>
+				</Output>
+			</Task>
+		</Workflow>
+	</Action>
+</ThingFacet>

@@ -1,0 +1,19 @@
+<ThingFacet name="Bluetoothfacet">
+	<String name="BluetoothDevices" update="auto" KnownBy="BluetoothAction" />
+	<String name="BTURL" default="blth://" />
+	<String name ="ScanType"/>
+	<Action name="BluetoothAction" documentation="Sync the value of Bluetooth">
+		<Workflow Limit="1" Live="1" Timeout="0">
+			<Task name="Main" while="true">
+				<Event name="Argument" as="ActionArgument" />
+				<Invoke name="ReadValue" waitFor="Argument"
+					get="[%:Event.Argument.BTURL.Value:%]" ScanType="[%:Event.Argument.ScanType.Value:%]"/>
+				<Output name="Result" as="ActionResult">
+					<Value>
+						<BluetoothDevices>[%:[%:@Output:%]Invoke.ReadValue.Message.Value:%]</BluetoothDevices>
+					</Value>
+				</Output>
+			</Task>
+		</Workflow>
+	</Action>
+</ThingFacet>

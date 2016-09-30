@@ -1,0 +1,10 @@
+<Def Name="PeripheralParams">
+	<String Name="Peripheral" />
+	<String Name="Interface" />
+	<String name="InterfacePort" />
+	<String name="Baudrate" />
+	<String Name="UniqueId" default="56789" />
+	<String Name="Format" default="ascii" />
+	<String Name="Operation" />
+	<String Name="Payload" />
+</Def>

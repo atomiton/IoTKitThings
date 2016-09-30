@@ -1,0 +1,248 @@
+<Query>
+  <Find format="version,Known">
+    <SerialPortModel>
+      <ID ne=""/>
+    </SerialPortModel>
+  </Find>
+  <if condition="$Response.Message.Value/Find/Status eq 'Success'">
+    <then>
+      <SetContextData key="PortName">
+        <Value>
+          [:$Response.Message.Value.Find.Result.SerialPortModel.PortName.Known:]
+        </Value>
+      </SetContextData>
+      <SetContextData key="Baudrate">
+        <Value>
+          [:$Response.Message.Value.Find.Result.SerialPortModel.Baudrate:]
+        </Value>
+      </SetContextData>
+      <executeQuery>
+        <QueryString>
+          <Query>
+            <DeleteAll format="version,current">
+              <MCUSensorModel>
+                <sensorId ne=""/>
+              </MCUSensorModel>
+            </DeleteAll>
+            <DeleteAll format="version,current">
+              <RGBModel>
+                <rgbId ne=""/>
+              </RGBModel>
+            </DeleteAll>
+            <DeleteAll format="version,current">
+              <TempSensorModel>
+                <TempSensorId ne=""/>
+              </TempSensorModel>
+            </DeleteAll>
+            <DeleteAll format="version,current">
+              <HumiditySensorModel>
+                <HumSensorId ne=""/>
+              </HumiditySensorModel>
+            </DeleteAll>
+            <DeleteAll format="version,current">
+              <AmbianceSensorModel>
+                <AmbSensorId ne=""/>
+              </AmbianceSensorModel>
+            </DeleteAll>
+            <DeleteAll format="version,current">
+              <ServoModel>
+                <servoId ne=""/>
+              </ServoModel>
+            </DeleteAll>
+            <DeleteAll>
+              <USBCameraModel>
+                <camId ne=""/>
+              </USBCameraModel>
+            </DeleteAll>
+            <Create>
+              <MCUSensorModel>
+                <PerifParams>
+                  <Peripheral>
+                    serial
+                  </Peripheral>
+                  <Interface>
+                    serial
+                  </Interface>
+                  <InterfacePort>
+                    [:$ContextData.PortName:]
+                  </InterfacePort>
+                  <Baudrate>
+                    [:$ContextData.Baudrate:]
+                  </Baudrate>
+                  <Format>
+                    ascii
+                  </Format>
+                  <Operation>
+                    receive
+                  </Operation>
+                  <UniqueId>
+                    76522
+                  </UniqueId>
+                  <Payload>
+                    $Null()
+                  </Payload>
+                </PerifParams>
+                <SensorData>
+                  $Null()
+                </SensorData>
+                <InitSubscribers>
+                  false
+                </InitSubscribers>
+              </MCUSensorModel>
+            </Create>
+            <Create>
+              <RGBModel>
+                <Peripheral>
+                  serial
+                </Peripheral>
+                <Interface>
+                  serial
+                </Interface>
+                <InterfacePort>
+                  [:$ContextData.PortName:]
+                </InterfacePort>
+                <Baudrate>
+                  [:$ContextData.Baudrate:]
+                </Baudrate>
+                <format>
+                  ascii
+                </format>
+                <Operation>
+                  transmit
+                </Operation>
+                <UniqueId>
+                  1779
+                </UniqueId>
+                <RGBString>
+                  RGB-1:111
+                </RGBString>
+                <received>
+                  $Null()
+                </received>
+              </RGBModel>
+            </Create>
+            <Create>
+              <ServoModel>
+                <Peripheral>
+                  serial
+                </Peripheral>
+                <Interface>
+                  serial
+                </Interface>
+                <InterfacePort>
+                  [:$ContextData.PortName:]
+                </InterfacePort>
+                <Baudrate>
+                  [:$ContextData.Baudrate:]
+                </Baudrate>
+                <format>
+                  ascii
+                </format>
+                <Operation>
+                  transmit
+                </Operation>
+                <UniqueId>
+                  123467
+                </UniqueId>
+                <Angle>
+                  40
+                </Angle>
+                <received>
+                  $Null()
+                </received>
+              </ServoModel>
+            </Create>
+            <Create>
+              <TempSensorModel>
+                <TempValueInC>
+                  0
+                </TempValueInC>
+                <TempValueInF>
+                  0
+                </TempValueInF>
+              </TempSensorModel>
+            </Create>
+            <Create>
+              <HumiditySensorModel>
+                <HumidityValue>
+                  0
+                </HumidityValue>
+              </HumiditySensorModel>
+            </Create>
+            <Create>
+              <AmbianceSensorModel>
+                <AmbianceValue>
+                  0
+                </AmbianceValue>
+              </AmbianceSensorModel>
+            </Create>
+            <Save>
+              <USBCameraModel>
+                <Image>
+                  $Null()
+                </Image>
+                <USBCameraParameters>
+                  <Size>
+                    <Height>
+                      500
+                    </Height>
+                    <Width>
+                      500
+                    </Width>
+                  </Size>
+                  <Configuration>
+                    <Channel>
+                      0
+                    </Channel>
+                    <Standard>
+                      0
+                    </Standard>
+                    <Brightness>
+                      0
+                    </Brightness>
+                    <Contrast>
+                      0
+                    </Contrast>
+                    <Gamma>
+                      286
+                    </Gamma>
+                    <Saturation>
+                      65
+                    </Saturation>
+                    <Sharpness>
+                      6
+                    </Sharpness>
+                    <Hue>
+                      0
+                    </Hue>
+                    <Gain>
+                      0
+                    </Gain>
+                    <Quality>
+                    </Quality>
+                  </Configuration>
+                  <SaveToDisk>
+                    true
+                  </SaveToDisk>
+                  <ImageFormat>
+                    jpeg
+                  </ImageFormat>
+                  <ImageName>
+                    ucam_testpic.jpeg
+                  </ImageName>
+                </USBCameraParameters>
+              </USBCameraModel>
+            </Save>
+
+          </Query>
+        </QueryString>
+      </executeQuery>
+      <SetResponseData key="Message.Value.Status" value="Success"/>
+      <SetResponseData key="Message.Value.Message" value="IoTKit Things Instantiated Successfully"/>
+    </then>
+    <else>
+      <SetResponseData key="Message.Value.Status" value="WARN"/>
+      <SetResponseData key="Message.Value.Message" value="Serial Port not detected"/>
+    </else>
+  </if>
+</Query>

@@ -1,0 +1,4 @@
+<Def Name="ImageSize">
+      <Number Default="0" Name="Height"/>
+      <Number Default="0" Name="Width"/>
+    </Def>

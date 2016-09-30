@@ -1,0 +1,62 @@
+<ThingFacet Name="USBCameraFacet">
+  <String KnownBy="USBCameraImageAction" Name="Image"/>
+  <USBCameraParams Name="USBCameraParameters"/>
+  <AA>[:#o#Event.Argument:]</AA>
+
+  <Action Documentation="Get the image from USB Camera" Name="USBCameraImageAction">
+
+    <Workflow Limit="1" Live="1" Timeout="-1">
+      <Task name="Main" while="true">
+        <Event as="ActionArgument" name="Argument"/>
+        <Invoke name="GetImage" post="ucam://" waitFor="ActionArgument">
+          <Message>
+            <Value>
+              <USBCameraParameters>
+                <ImageFormat>[%:Event.Argument.USBCameraParameters.ImageFormat.Value:%]</ImageFormat>
+                <SaveToDisk>[%:Event.Argument.USBCameraParameters.SaveToDisk.Value:%]</SaveToDisk>
+                <ImageName>[%:Event.Argument.USBCameraParameters.ImageName.Value:%]</ImageName>
+                <Size>
+                  <Height>[%:Event.Argument.USBCameraParameters.Size.Height.Value:%]</Height>
+                  <Width>[%:Event.Argument.USBCameraParameters.Size.Width.Value:%]</Width>
+                </Size>
+                <Configuration>
+                  <Standard>[%:Event.Argument.USBCameraParameters.Configuration.Standard.Value:%]</Standard>
+                  <Quality>[%:Event.Argument.USBCameraParameters.Configuration.Quality.Value:%]</Quality>
+                  <Channel>[%:Event.Argument.USBCameraParameters.Configuration.Channel.Value:%]</Channel>
+                  <Brightness>[%:Event.Argument.USBCameraParameters.Configuration.Brightness.Value:%]</Brightness>
+                  <Contrast>[%:Event.Argument.USBCameraParameters.Configuration.Contrast.Value:%]</Contrast>
+                  <Gamma>[%:Event.Argument.USBCameraParameters.Configuration.Gamma.Value:%]</Gamma>
+                  <Gain>[%:Event.Argument.USBCameraParameters.Configuration.Gain.Value:%]</Gain>
+                  <Sharpness>[%:Event.Argument.USBCameraParameters.Configuration.Sharpness.Value:%]</Sharpness>
+                  <Saturation>[%:Event.Argument.USBCameraParameters.Configuration.Saturation.Value:%]</Saturation>
+                  <Hue>[%:Event.Argument.USBCameraParameters.Configuration.Hue.Value:%]</Hue>
+                </Configuration>
+              </USBCameraParameters>
+            </Value>
+          </Message>
+        </Invoke>
+        <Log Message="******Invoked USBCamera******"/>
+        <Output as="ActionResult" name="Result">
+          <Value>
+            <Image>[%:[%:@Output:%]Invoke.GetImage.Message.Value:%]</Image>
+          </Value>
+        </Output>
+      </Task>
+    </Workflow>
+  </Action>
+  <Action Name="USBCameraCLAction" Documentation="Camera using command line">
+    <Workflow Limit="1" Live="1" Timeout="0">
+      <Task Name="Getport" While="true">
+        <Event Name="Argument" As="ActionArgument"/>
+        <shellscript>fswebcam -r [%:Event.Argument.USBCameraParameters.Size.Height.Value:%]x[%:Event.Argument.USBCameraParameters.Size.Width.Value:%] --jpeg 85 -D 1 [%:Event.Argument.USBCameraParameters.ImageName.Value:%]</shellscript>
+        <Invoke Name="Executescript" waitFor="Argument" execute="[:shellscript:]"></Invoke>
+        <Log message="The serial Port is [%:Invoke.Executescript:%]"/>
+        <Output name="Result" as="ActionResult">
+          <Value>
+            <Image>[%:Invoke.Executescript.Message.Value:%]</Image>
+          </Value>
+        </Output>
+      </Task>
+    </Workflow>
+  </Action>
+</ThingFacet>

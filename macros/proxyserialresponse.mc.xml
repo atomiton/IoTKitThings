@@ -1,0 +1,18 @@
+<Macro Name="ProxySerialResponse">
+      <Argument>
+      </Argument>
+      <Result>
+        <ExecuteQuery>
+          <QueryString>
+            <Query>
+              <Find format="known">
+                <MCUSensorModel>
+                  <SensorId ne=""/>
+                </MCUSensorModel>
+              </Find>
+            </Query>
+          </QueryString>
+        </ExecuteQuery>
+        <JavaScript>var str = "[:$Response.Message.Value.Find.Result.MCUSensorModel.SensorData.Known:]";sffLog.info("***************SensorData**************" + str);var sensorToken = str.split("#");var updateFacetData = ListMap.static.newInstance();for(i=0; i&lt;sensorToken.length; i++) {sval =sensorToken[i].split(":");sffContext.setContextData(sval[0], sval[1]);}updateFacetData.instanceAdd("UpdateTempValueToNull");updateFacetData.instanceAdd("UpdateHumidityValueToNull");updateFacetData.instanceAdd("UpdateAmbianceValueToNull");sffLog.info(updateFacetData);updateFacetData;</JavaScript>
+      </Result>
+    </Macro>

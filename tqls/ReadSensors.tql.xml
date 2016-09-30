@@ -1,0 +1,22 @@
+<Query>
+  <Find format="version,known">
+    <MCUSensorModel>
+      <sensorId ne=""/>
+    </MCUSensorModel>
+  </Find>
+  <Find format="version,known">
+    <TempSensorModel>
+      <TempSensorId ne=""/>
+    </TempSensorModel>
+  </Find>
+  <Find format="version,known">
+    <HumiditySensorModel>
+      <HumSensorId ne=""/>
+    </HumiditySensorModel>
+  </Find>
+  <Find format="version,known">
+    <AmbianceSensorModel>
+      <AmbSensorId ne=""/>
+    </AmbianceSensorModel>
+  </Find>
+</Query>

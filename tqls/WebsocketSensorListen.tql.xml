@@ -1,0 +1,10 @@
+<!-- Run this Query on Websocket EndPoint -->
+<Query Storage='TqlSubscription'>
+  <Save>
+    <TqlSubscription Label='SensorSubscription' sid='10'>
+      <Topic>
+        *Atomiton.Sensor.MCUSensorModel*
+      </Topic>
+    </TqlSubscription>
+  </Save>
+</Query>

@@ -1,0 +1,38 @@
+<ScheduleTQLCode>
+  <ScheduleInterval>1sec</ScheduleInterval>
+  <ScheduleName>RGBLightSchedule</ScheduleName>
+  <ActionCode>
+    <executeQuery>
+      <QueryString>
+        <Query>
+          <Find format="version,known">
+            <RGBModel>
+              <rgbId ne=""/>
+            </RGBModel>
+          </Find>
+          <if condition="$Response.Message.Value/Find/Status eq 'Success'">
+            <then>
+              <JavaScript>
+                var r = Math.floor(Math.random() * (3 - 1) + 1); var r1 = Math.floor(Math.random() * (8 - 0) + 0); var RGBStr = "RGB-2" + ":" + r1.toString(2);
+                sffContext.setContextData("RGB", RGBStr);
+              </JavaScript>
+              <SetResponseData>
+                <key>Message.Value.Find.Result.RGBModel.RGBString.Value</key>
+                <value>[:$ContextData.RGB:]</value>
+              </SetResponseData>
+              <Update>
+                <from>Result</from>
+                <Include>$Response.Message.Value.Find</Include>
+              </Update>
+            </then>
+            <else>
+              <DelResponseData key="Message.Value.Find"/>
+              <SetResponseData key="Message.Value.status" value="Failed"/>
+              <SetResponseData key="Message.Value.Message" value="RGB is not initialized"/>
+            </else>
+          </if>
+        </Query>
+      </QueryString>
+    </executeQuery>
+  </ActionCode>
+</ScheduleTQLCode>

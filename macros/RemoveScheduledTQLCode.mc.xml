@@ -1,0 +1,16 @@
+<Macro Name="RemoveScheduledTQLCode">
+  <Argument>
+    <ScheduleName/>
+  </Argument>
+  <Result>
+    <DoRequest target="[:RuntimeParams.SequenceFacetIDName:]">
+      <Process>
+        <Message type="xml">
+          <Value>
+            <Remove eid="[:$Macro.Argument.ScheduleName:]"/>
+          </Value>
+        </Message>
+      </Process>
+    </DoRequest>
+  </Result>
+</Macro>

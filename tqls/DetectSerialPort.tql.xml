@@ -1,0 +1,29 @@
+<Query>
+   <Find format="version,Known">
+    <SerialPortModel>
+      <ID ne=""/>
+    </SerialPortModel>
+  </Find>
+  <if condition="$Response.Message.Value/Find/Status eq 'Success'">
+    <then>
+        <DeleteAll>
+      <SerialPortModel>
+      <ID ne=""/>
+    </SerialPortModel>
+        </DeleteAll>
+    </then>
+  </if>
+  <Create>
+    <SerialPortModel>
+      <PortName>
+        $Null()
+      </PortName>
+      <Baudrate>
+        9600
+      </Baudrate>
+      <DefaultPort>
+        /dev/cu.usbmodem1411
+      </DefaultPort>
+    </SerialPortModel>
+  </Create>
+</Query>

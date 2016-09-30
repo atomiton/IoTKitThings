@@ -1,0 +1,39 @@
+<ThingFacet Name="Servomotorfacet">
+	<String Name="Peripheral" />
+	<String name="InterfacePort"/>
+	<String name="Baudrate" />
+	<String Name="Interface" />
+	<String Name="UniqueId" default="12345" />
+	<String Name="format" default="ascii" />
+	<String Name="Operation" />
+	<String KnownBy="XbeeservoAction" Name="Angle" />
+	<AA>[:#o#Output.Argument:]</AA>
+	<Action Documentation="Start the Servo Motor" Name="XbeeservoAction">
+		<Workflow Limit="1" Live="1" Timeout="-1">
+			<Task name="Main">
+				<Output as="ActionArgument" name="Argument" />
+				<Invoke name="InvokeZbeeServo" post="perif://5678" scope="local"
+					waitFor="Argument">
+					<Message>
+						<Value>
+							<InterfacePort>"[%:[:AA:].InterfacePort.Value:%]"</InterfacePort>
+							<Baudrate>"[%:[:AA:].Baudrate.Value:%]"</Baudrate>
+							<Interface>"[%:[:AA:].Interface.Value:%]"</Interface>
+							<UniqueId>"[%:[:AA:].UniqueId.Value:%]"</UniqueId>
+							<Operation>"[%:[:AA:].Operation.Value:%]"</Operation>
+							<format>"[%:[:AA:].format.Value:%]"</format>
+							<Payload>"[%:[:AA:].Angle.Value:%]"</Payload>
+							<Peripheral>"[%:[:AA:].Peripheral.Value:%]"</Peripheral>
+						</Value>
+					</Message>
+				</Invoke>
+				<Log Message="***** After Invoke *****" />
+				<Output as="ActionResult" name="Result">
+					<Value>
+						<Angle>"[%:[:AA:].Angle.Value:%]"</Angle>
+					</Value>
+				</Output>
+			</Task>
+		</Workflow>
+	</Action>
+</ThingFacet>

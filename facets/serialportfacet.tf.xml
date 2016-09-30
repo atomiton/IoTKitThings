@@ -1,0 +1,21 @@
+<AppFacet Name="SerialPortFacet">
+	<String name="PortName" KnownBy="PortAction" />
+	<String name="Baudrate" default="9600"/>
+    <String name="DefaultPort"/>
+    <AA>[:#o#Event.Argument:]</AA>
+	<Action Name="PortAction" Documentation="Find the device Node to which arduino is attached">
+		<Workflow Limit="1" Live="1" Timeout="0">
+			<Task Name="Getport" While="true">
+				<Event Name="Argument" As="ActionArgument" />
+				<shellscript>./scripts/portEnumerate.sh [%:[:AA:].DefaultPort.Value:%]</shellscript>
+				<Invoke Name="Executescript" waitFor="Argument" execute="[:shellscript:]"></Invoke>
+				<Log message="The serial Port is [%:Invoke.Executescript:%]"/>
+				<Output name="Result" as="ActionResult">
+					<Value>
+						<PortName>[%:Invoke.Executescript.Message.Value:%]</PortName>
+					</Value>
+				</Output>
+			</Task>
+		</Workflow>
+	</Action>
+</AppFacet>

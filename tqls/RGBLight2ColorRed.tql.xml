@@ -1,0 +1,33 @@
+<!-- RGB-1 means LED1, RGB-2 means LED-2, RGB-3 means LED3 001 [RED Off, Green Off, Blue On] 111 [RED On, Green On , Blue On] -->
+<Query>
+  <Find format="version,known">
+    <RGBModel>
+      <rgbId ne=""/>
+    </RGBModel>
+  </Find>
+  <if condition="$Response.Message.Value/Find/Status eq 'Success'">
+    <then>
+      <SetResponseData>
+        <key>
+          Message.Value.Find.Result.RGBModel.RGBString.Value
+        </key>
+        <value>
+          RGB-2:100
+        </value>
+      </SetResponseData>
+      <Update>
+        <from>
+          Result
+        </from>
+        <Include>
+          $Response.Message.Value.Find
+        </Include>
+      </Update>
+    </then>
+    <else>
+      <DelResponseData key="Message.Value.Find"/>
+      <SetResponseData key="Message.Value.status" value="Failed"/>
+      <SetResponseData key="Message.Value.Message" value="RGB is not initialized"/>
+    </else>
+  </if>
+</Query>

@@ -1,0 +1,7 @@
+<Query>
+  <Find format="version, known">
+    <SerialPortModel>
+      <ID ne=""/>
+    </SerialPortModel>
+  </Find>
+</Query>

@@ -1,0 +1,7 @@
+<Def Name="USBCameraParams">
+      <ImageSize Name="Size"/>
+      <CameraConfig Name="Configuration"/>
+      <String Default="true" Name="SaveToDisk"/>
+      <String Default="jpeg" Name="ImageFormat"/>
+      <String Default="usb_camera.jpeg" Name="ImageName"/>
+    </Def>

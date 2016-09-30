@@ -1,0 +1,56 @@
+<ThingFacet Name="MCUSensorFacet">
+      <String KnownBy="InitSubAction" Name="InitSubscribers" default="false"/>
+      <String KnownBy="SensorDataReadAction" Name="SensorData" update="auto"/>
+      <PeripheralParams Name="PerifParams"/>
+      <Action Name="InitSubAction">
+        <Workflow Limit="1" Live="1" Timeout="-1">
+          <Task name="Main" while="true">
+            <Event as="ActionArgument" name="Argument"/>
+            <Invoke name="InvokeSubs" waitFor="Argument">
+              <FacetScript>
+                <If Condition="/'[%:Event.Argument.InitSubscribers.Value:%]' eq 'true'">
+                  <Log Message="Subscribing to: *Atomiton.Sensor.MCUSensorModel.SensorData.[%:Event.Argument.SensorId:%]*"/>
+                  <SubscribeToTQL>
+                    <TopicName>*Atomiton.Sensor.MCUSensorModel.SensorData.[%:Event.Argument.SensorId:%]*</TopicName>
+                    <ActionName>
+                      <ProxySerialResponse/>
+                    </ActionName>
+                  </SubscribeToTQL>
+                </If>
+              </FacetScript>
+            </Invoke>
+            <Output As="ActionResult" Name="Result">
+              <Value>
+                <InitSubscribers>[%:Event.Argument.InitSubscribers.Value:%]</InitSubscribers>
+              </Value>
+            </Output>
+          </Task>
+        </Workflow>
+      </Action>
+      <Action Name="SensorDataReadAction">
+        <Workflow Limit="1" Live="1" Timeout="-1">
+          <Task name="Main" while="true">
+            <Event as="ActionArgument" name="Argument"/>
+            <Invoke get="perif://" name="InvokeSerialRead" waitFor="Argument">
+              <Message>
+                <Value>
+                  <InterfacePort>"[%:Event.Argument.PerifParams.InterfacePort.Value:%]"</InterfacePort>
+                  <Baudrate>"[%:Event.Argument.PerifParams.Baudrate.Value:%]"</Baudrate>
+                  <Interface>"[%:Event.Argument.PerifParams.Interface.Value:%]"</Interface>
+                  <UniqueId>"[%:Event.Argument.PerifParams.UniqueId.Value:%]"</UniqueId>
+                  <Operation>"[%:Event.Argument.PerifParams.Operation.Value:%]"</Operation>
+                  <Peripheral>"[%:Event.Argument.PerifParams.Peripheral.Value:%]"</Peripheral>
+                  <Payload>"[%:Event.Argument.PerifParams.Payload.Value:%]"</Payload>
+                  <Format>"[%:Event.Argument.PerifParams.Format.Value:%]"</Format>
+                </Value>
+              </Message>
+            </Invoke>
+            <Output As="ActionResult" Name="Result">
+              <Value>
+                <SensorData>[%:Invoke.InvokeSerialRead.Message.Value/normalize-space(received):%]</SensorData>
+              </Value>
+            </Output>
+          </Task>
+        </Workflow>
+      </Action>
+    </ThingFacet>

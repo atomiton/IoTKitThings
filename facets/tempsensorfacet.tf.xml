@@ -1,0 +1,32 @@
+<ThingFacet Name="TempSensorFacet">
+      <Double KnownBy="TempValueAction" Name="TempValueInC"/>
+      <Double KnownBy="TempValueAction" Name="TempValueInF"/>
+      <Action Name="TempValueAction">
+        <Workflow Limit="1" Live="1" Timeout="-1">
+          <Task name="Main" while="true">
+            <Event as="ActionArgument" name="Argument"/>
+            <Invoke name="ReadValueFromContext" waitFor="Argument">
+              <FacetScript>
+                <Log Message="Reading TEMPC/TEMPF value from context [:$ContextData.TEMPC:] / [:$ContextData.TEMPF:]"/>
+                <If Condition="$ContextData/not(boolean(TEMPC))">
+                  <SetContextData>
+                    <Key>TEMPC</Key>
+                    <Value>0</Value>
+                  </SetContextData>
+                  <SetContextData>
+                    <Key>TEMPF</Key>
+                    <Value>0</Value>
+                  </SetContextData>
+                </If>
+              </FacetScript>
+            </Invoke>
+            <Output As="ActionResult" Name="Result">
+              <Value>
+                <TempValueInC>[:$ContextData.TEMPC:]</TempValueInC>
+                <TempValueInF>[:$ContextData.TEMPF:]</TempValueInF>
+              </Value>
+            </Output>
+          </Task>
+        </Workflow>
+      </Action>
+    </ThingFacet>

@@ -1,0 +1,26 @@
+<ThingFacet Name="AmbianceSensorFacet">
+      <Double KnownBy="AmbianceValueAction" Name="AmbianceValue"/>
+      <Action Name="AmbianceValueAction">
+        <Workflow Limit="1" Live="1" Timeout="-1">
+          <Task name="Main" while="true">
+            <Event as="ActionArgument" name="Argument"/>
+            <Invoke name="ReadValueFromContext" waitFor="Argument">
+              <FacetScript>
+                <Log Message="Reading AMB value from context [:$ContextData.AMB:]"/>
+                <If Condition="$ContextData/not(boolean(AMB))">
+                  <SetContextData>
+                    <Key>AMB</Key>
+                    <Value>0</Value>
+                  </SetContextData>
+                </If>
+              </FacetScript>
+            </Invoke>
+            <Output As="ActionResult" Name="Result">
+              <Value>
+                <AmbianceValue>[:$ContextData.AMB:]</AmbianceValue>
+              </Value>
+            </Output>
+          </Task>
+        </Workflow>
+      </Action>
+    </ThingFacet>

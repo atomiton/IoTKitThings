@@ -1,0 +1,24 @@
+<Macro Name="UpdateAmbianceValueToNull">
+      <Argument/>
+      <Result>
+        <ExecuteQuery>
+          <QueryString>
+            <Query>
+              <Find format="version">
+                <AmbianceSensorModel>
+                  <AmbSensorId ne=""/>
+                </AmbianceSensorModel>
+              </Find>
+              <SetResponseData>
+                <key>Message.Value.Find.Result.AmbianceSensorModel.AmbianceValue.Value</key>
+                <value>$Null()</value>
+              </SetResponseData>
+              <Update>
+                <from>Result</from>
+                <Include>$Response.Message.Value.Find</Include>
+              </Update>
+            </Query>
+          </QueryString>
+        </ExecuteQuery>
+      </Result>
+    </Macro>
